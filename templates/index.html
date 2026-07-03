@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk - Início</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Helpdesk e Suporte de TI</h1>
+        <p>Bem-vindo ao painel central de atendimento.</p>
+        
+        <div class="menu-botoes">
+            <a href="{{ url_for('novo_chamado') }}" class="btn">Abrir Novo Chamado</a>
+            <a href="{{ url_for('fila_suporte') }}" class="btn">Acessar Fila de Suporte</a>
+        </div>
+    </div>
+</body>
+</html>

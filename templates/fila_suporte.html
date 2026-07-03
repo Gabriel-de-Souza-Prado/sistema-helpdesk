@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Fila de Suporte</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container fila-container">
+        <h2>Fila de Suporte de TI</h2>
+        <a href="{{ url_for('index') }}" class="link-voltar">⬅ Voltar ao Início</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Descrição</th>
+                    <th>Prioridade</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for chamado in chamados %}
+                <tr>
+                    <td>#{{ chamado.id }}</td>
+                    <td>{{ chamado.cliente }}</td>
+                    <td>{{ chamado.descricao }}</td>
+                    <td><span class="badge {{ chamado.prioridade|lower }}">{{ chamado.prioridade }}</span></td>
+                    <td><strong>{{ chamado.status }}</strong></td>
+                    <td class="acoes">
+                        
+                        <form action="{{ url_for('atualizar', id_chamado=chamado.id) }}" method="POST">
+                            <input type="hidden" name="novo_status" value="Em Atendimento">
+                            <button type="submit" class="btn-acao btn-atender">Atender</button>
+                        </form>
+
+                        <form action="{{ url_for('atualizar', id_chamado=chamado.id) }}" method="POST">
+                            <input type="hidden" name="novo_status" value="Resolvido">
+                            <button type="submit" class="btn-acao btn-concluir">Concluir</button>
+                        </form>
+
+                        <form action="{{ url_for('desabilitar', id_chamado=chamado.id) }}" method="POST">
+                            <button type="submit" class="btn-acao btn-cancelar" onclick="return confirm('Tem certeza que deseja cancelar este chamado?')">Cancelar</button>
+                        </form>
+
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="mensagem-vazia">Nenhum chamado pendente na fila! 🎉</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
